@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+gem 'pry'
+gem 'pry-byebug'
+#gem 'pry-nav'
+#gem 'pry-stack_explorer'
+#gem 'pry-rescue'
+gem 'awesome_print'
+gem 'deep_merge'
+gem 'activesupport'
+gem 'time_difference', git: 'https://github.com/IQTHINK/time_difference'

@@ -1,0 +1,7 @@
+x the deep merge on the slashes seems to account same-hash-data as same obj, thus not correctly adding them to the @map
+x add BuyEntry date lock formula
+x BuyEntry 1-jul to 1-ago should be 1 parcel and not 2
+- views
+  - SCStringFormatter
+- ledger#vd
+- ledger#rm refact
