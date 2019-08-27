@@ -1,4 +1,5 @@
 class DailyEntries
+  attr_accessor :map
   class DlyEntryHash < Hash
     def initialize(entry)
       self[entry.start_date || Date.today] = {
@@ -9,7 +10,6 @@ class DailyEntries
   end
 
   def initialize
-    #@entries = SortedSet.new
     @map = {
       Date.today => {
         entries: [],
@@ -19,31 +19,17 @@ class DailyEntries
   end
 
   def balance
-    #@entries.sum &:value
     @map.sum {|k,v| @map[k][:total] }
   end
 
   def add(entry)
-    #@entries << entry
     @map.deeper_merge(DlyEntryHash.new(entry), {le_block: lambda {|x,y| x+y }})
-    #process
   end
   alias_method :<<, :add
-
-  #def process
-    #@entries.sort_by(&:start_date).map {|e|
-      #@map[e.start_date] ||= {}
-      #@map[e.start_date][:entries] ||= SortedSet.new
-      #@map[e.start_date][:total] ||= 0
-      #@map[e.start_date][:entries] << e
-    #}
-    #@map.each_key {|d|
-      #@map[d][:total] = @map[d][:entries].sum(&:value)
-    #}
-  #end
 end
 
 class FixedEntries
+  attr_accessor :map
   def initialize
     @map = {
       income: SortedSet.new,
@@ -68,6 +54,7 @@ class FixedEntries
 end
 
 class BuyEntries
+  attr_accessor :map
   class BuyEntrySlashes < Hash
     def initialize(entry)
       1.upto(entry.parcels) {|p|
@@ -89,7 +76,6 @@ class BuyEntries
     end
   end
 
-  attr_reader :map
   def initialize
     @map = {
       "#{Date.today.strftime("%m-%Y")}" => {
