@@ -4,7 +4,7 @@ require 'deep_merge/rails_compat'
 require 'active_support'
 require 'active_support/core_ext'
 require 'pry'
-require 'pry-byebug'
+#require 'pry-byebug'
 #require 'pry-nav'
 #require 'pry-rescue'
 AwesomePrint.pry!
@@ -16,33 +16,65 @@ load 'exts.rb'
 
 load 'ledger.rb'
 load 'entry.rb'
-load 'views.rb'
+load 'views2.rb'
 
-$LEDGER = Ledger.new
-
-def add(entry)
-  $LEDGER.add(entry)
+def self.add(entry)
+  @ledger.add(entry)
+  save if @autosave
 end
 
-def init
-  $LEDGER = Ledger.new
-  watch $LEDGER.data
+def self.dlyadd(value)
+  add(DailyEntry.new(value: value))
 end
 
-def dlist
+def self.fxadd(name, value)
+  add(FixedEntry.new(name: name, value: value))
+end
+
+def self.init
+  if File.exists?("data")
+    @ledger = Marshal.load(File.read("data"))
+  else
+    @ledger = Ledger.new
+  end
+end
+
+def self.save
+  File.open("data", "w") {|f|
+    f.write(Marshal.dump(@ledger))
+  }
+  p "success"
+end
+
+def self.balance
+  @ledger.balance
+end
+
+def self.available
+  @ledger.da
+end
+
+def self.dlist
   DailyEntryView.new(
-    $LEDGER.data[:dly_entries].map
+    @ledger.data[:dly_entries].map
   ).print
 end
 
-def flist
+def self.flist
   FixedEntryView.new(
-    $LEDGER.data[:fxd_entries].map
+    @ledger.data[:fxd_entries].map
   ).print
 end
 
-def blist
+def self.blist
   BuyEntryView.new(
-    $LEDGER.data[:buy_entries].map
+    @ledger.data[:buy_entries].map
   ).print
 end
+
+def set_watches(pry)
+  pry.eval "watch flist"
+end
+
+init
+@autosave = true

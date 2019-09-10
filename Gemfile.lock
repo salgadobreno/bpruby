@@ -14,7 +14,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
     awesome_print (1.8.0)
-    byebug (11.0.1)
+    bigdecimal (1.4.4)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     deep_merge (1.2.1)
@@ -25,9 +25,6 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    pry-byebug (3.7.0)
-      byebug (~> 11.0)
-      pry (~> 0.10)
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
@@ -38,10 +35,10 @@ PLATFORMS
 DEPENDENCIES
   activesupport
   awesome_print
+  bigdecimal
   deep_merge
   pry
-  pry-byebug
   time_difference!
 
 BUNDLED WITH
-   1.17.2
+   1.17.3

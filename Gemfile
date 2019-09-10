@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
+gem 'bigdecimal'
 gem 'pry'
-gem 'pry-byebug'
+#gem 'pry-byebug'
 #gem 'pry-nav'
 #gem 'pry-stack_explorer'
 #gem 'pry-rescue'

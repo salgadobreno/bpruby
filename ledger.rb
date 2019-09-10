@@ -101,12 +101,18 @@ end
 
 class Ledger
   attr_reader :data
+  attr_reader :dailies
+  attr_reader :fixeds
+  attr_reader :buys
 
   def initialize
+    @dailies = DailyEntries.new
+    @fixeds = FixedEntries.new
+    @buys = BuyEntries.new
     @data = {
-      dly_entries: DailyEntries.new,
-      fxd_entries: FixedEntries.new,
-      buy_entries: BuyEntries.new,
+      dly_entries: @dailies,
+      fxd_entries: @fixeds,
+      buy_entries: @buys,
     }
   end
 
@@ -114,10 +120,11 @@ class Ledger
   end
 
   def da
+    @fixeds.available
   end
 
   def balance
-    @data[:dly_entries].sum &:value
+    @dailies.balance
   end
 
   def add(entry)
